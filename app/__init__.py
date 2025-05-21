@@ -23,6 +23,12 @@ def home():
 
     return render_template("pages/home.jinja", things=records)
 
+@app.get("/thing/<int:id>")
+def showThing(id):
+    response = supabase.table("things").select().eq("id", id).single().execute()
+    record = response.data
+ 
+    return render_template("pages/thing.jinja", thing=record)
 
 @app.errorhandler(404)
 def notFound(error):
